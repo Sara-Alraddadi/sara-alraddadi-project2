@@ -1,40 +1,56 @@
+
+
+<html>
+    <head>
+    
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--css stylesheet-->
+    <%= stylesheet_link_tag "allgames" %>
+    <link href="https://fonts.googleapis.com/css?family=Cinzel&display=swap" rel="stylesheet">
+   
+    </head>
+    <body>
+
 <h1>All the Games</h1>
-<%= link_to "Add an Game", 'games/new', { :class => "button waves-effect waves-light btn" } %>
 
-<table class="table striped bordered">
-  <tr> 
-    <th>Game</th>
-    <th>Image</th>
-    <th>User Rate</th>
-    <th>Published Date</th>
-    <th>Price</th>
-    <th>Description</th>
-    <th>Edit</th>
-    <th>Delete</th>
-  </tr>
+<% @games.each do |game| %>
+  
+<div class="row">
+  <div class="col-lg-4">
+   <div class="card" style="width: 18rem;">
+   <% if game.img_url %>
+    <%= image_tag game.img_url , size: "250x300", alt: "Game Image", class:"thumbnail", class:"card-img-top"%>
+  <% end %>
+  <div class="card-body">
+  <%= link_to game.name , game_path(game), class:"card-title" %>
+  <p class="card-text"><b>Description:</b><%= game.description%></p>
+  </div>
 
+<ul class="list-group list-group-flush">
+  <li class="list-group-item"><b>Rate:</b> <%= game.user_rate%></li>
+  <li class="list-group-item"><b>published Date:</b> <%= game.published_date%></li>
+  <li class="list-group-item"><b>Price:</b> <%= game.price%></li>
+</ul>
 
-  <% @games.each do |game| %>
-    <tr>
-    <td><%= link_to game.name , game_path(game) %></td>
-    <td><%= image_tag game.img.url, class: "game-show" %></td>
-    <td><%= game.user_rate %></td>
-    <td><%= game.published_date %></td>
-    <td><%= game.price %></td>
-    <td><%= game.description %></td>
-      <td><a class="btn-floating btn-large red" href="<%= game_edit_path(game) %>" >
-                    <i class="large material-icons">Edit</i>
-              </a>
-        </td>
-    <!--  <td><a class="btn-floating btn-large red" data-confirm="Are you sure you want to delete <%= game.name %>?" data-method="delete" href="/games/<%= game.id %>" rel="nofollow"><i class="large material-icons">Delete Game</i>
-         </a>
-      </td>
-        
-                   -->
-<td> 
-         <%= button_to "Delete", "games/#{game.id}", method: :delete,
-            data: { confirm: "Are you sure?" } %>
-            </td>
-    </tr>
+  <div class="card-body">
+    <% if current_user %>
+    <% if current_user.id==game.user.id %>
+    <td><a class="btn-floating btn-large red card-link card-link" href="<%= game_edit_path(game) %>" >
+    <i class="large material-icons">Edit</i>
+  </a>
+  </td>
+  
+  <td><a class="btn-floating btn-large red card-link" data-confirm="Are you sure you want to delete <%= game.name %>?" data-method="delete" href="/games/<%= game.id %>" rel="nofollow"><i class="large material-icons ">Delete Game</i>
+  </a>
+  </td>
+    <% end %>
+  <% end %>
+  </div>
+  </div>
+</div>   
+  </div>
 <% end %>
-</table>
+</body>
+</html>

@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   post "games", to: "games#create"
 
   # root to: 'games#gameindex'
-  resources :artists, :songs
+#resources :artists, :songs
 
   get "games/:id/edit", to: "games#edit", as: :game_edit
 
@@ -29,6 +29,9 @@ Rails.application.routes.draw do
 
   get "reviews/new", to: "reviews#new"
   post "reviews", to: "reviews#create"
+  # get "reviews/:id/edit", to: "reviews#edit", as: :review_edit
+  delete "games/reviews/:id", to: "reviews#destroy"
+  get ":game_id/reviews/:id/edit", to: "reviews#edit", as: :review_edit
+  patch "/games/:game_id/reviews/:id/games/reviews", to: "reviews#update"
 
-  
 end

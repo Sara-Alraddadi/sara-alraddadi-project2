@@ -1,5 +1,6 @@
 <%= form_for @review do |f| %>
-    <%= f.hidden_field :game_id, :value => params[:game_id] %>
+    <%= f.hidden_field :game_id, :value => @game.id %>
+    <%= f.hidden_field :user_id, :value => current_user.id %>
     <div class="input-field col s6">
         <%= f.label :content, 'Content' %>
         <%= f.text_field :content %>

@@ -5,4 +5,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :reviews 
+  has_many :games
+
+  def username
+    return self.email.split('@')[0].capitalize        
+  end
+
 end

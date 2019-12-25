@@ -1,38 +1,39 @@
 <h1><%= @game.name %> Reviews</h1>
-  <%= link_to "New Review", reviews_new_path(:game_id => @game.id), { :class => "button waves-effect waves-light btn" } %>
+<button type="button" class="btn btn-secondary btn-sm"><%= link_to "New Review", reviews_new_path(:game_id => @game.id), { :class => "button waves-effect waves-light btn" } %></button>
+  
 
 
   <table class="table striped bordered">
     <tr> 
+     <th>User Name</th>
       <th>Content</th>
       <th>Edit</th>
       <th>Delete</th>
     </tr>
 
+
     <% @reviews.each do |review| %>
       <tr>
-        <td><%= link_to game.name %></td> #user Id
+        <td><%= link_to @game.user.username %></td> 
         <td><%= review.content %></td>
        
-        
-
-    <td><a class="btn-floating btn-large red" href="<%= review_edit_path(review) %>" >
-      <i class="large material-icons">Edit</i>
-    </a>
-    </td>
-
-
-    <!--  <td><a class="btn-floating btn-large red" data-confirm="Are you sure you want to delete <%= review.content %>?" data-method="delete" href="/reviews/<%= game.id %>" rel="nofollow"><i class="large material-icons">Delete Review</i>
-    </a>
-    </td>
-
-
-    -->
-    <td> 
-    <%= button_to "Delete", "reviews/#{game.id}", method: :delete,
+        <% if current_user %>
+        <% if current_user.id==review.user.id %>
+        <td><a class="btn-floating btn-large red" href="<%= review_edit_path(review) %>" >
+        <i class="large material-icons">Edit</i>
+      </a>
+      </td>
+      
+      <td> 
+    <%= button_to "Delete", "reviews/#{review.id}", method: :delete,
     data: { confirm: "Are you sure?" } %>
-    </td>
+      </a>
+      </td>
+        <% end %>
+      <% end %>
     </tr>
+
+    
 
         
     <% end %>

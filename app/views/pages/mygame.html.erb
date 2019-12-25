@@ -1,5 +1,96 @@
 <h1>All the Games</h1>
-<%= link_to "Add an Game", 'games/new', { :class => "button waves-effect waves-light btn" } %>
+<head>
+    <title>Gamestore</title>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel="stylesheet" type="text/css" href="bootstrap.min.css"> 
+  <%= stylesheet_link_tag "style" %>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      
+    <!--css stylesheet-->
+    <!--libraries-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+      
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+      
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css">
+    
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:100,100i,300,300i,400,400i,500,500i,700,700i,800,800i,900,900i" rel="stylesheet">
+      
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+      
+      
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  </head>
+
+  <body>
+  <!--Nav bar-->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="mainNav">
+  <div class="container-fluid">
+    <!--Logo-->
+    <a class="navbar-brand js-scroll-trigger" href="pages">
+      <h2></h2>
+     <img src="https://i.ibb.co/Z8GXL87/kisspng-optic-gaming-logo-t-shirt-sticker-hip-vector-5ae06222eafe50-7951766515246546269625.png" alt="kisspng-optic-gaming-logo-t-shirt-sticker-hip-vector-5ae06222eafe50-7951766515246546269625" border="0" style= "width: 90px; height: 90px">
+    </a>
+    <!--When page resize page to smaller size the list will turn into button-->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+    <!--user signin, signout, editprofile-->
+    <p class="navbar-text pull-right">
+    <% if user_signed_in? %>
+    Logged in as <strong><%= current_user.email %></strong>.
+    <%= link_to 'Edit Profile', edit_user_registration_path, :class => 'nav-email'%> 
+    <% else %>
+    
+    <% end %>
+    </p>
+    <% if notice %>
+    <p class="alert alert-success"><%= notice %></p>
+    <% end %>
+    <% if alert %>
+    <p class="alert alert-danger"><%= alert %></p>
+    <% end %>
+
+
+    <!--navigation bar pages list-->
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="pages">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+        <%= link_to "Games", games_path, :class => 'nav-link'  %> 
+        </li>
+        <li class="nav-item">
+        <%= link_to "MyGames", "pages/mygame", :class => 'nav-link'  %> 
+        </li>
+        <li class="nav-item">
+            <%= link_to "Login", new_user_session_path, :class => 'nav-link'  %>
+        </li>
+        <li class="nav-item">
+        <%= link_to "Sign up", new_user_registration_path, :class => 'nav-link'  %> 
+        </li>
+        <li class="nav-item">
+        <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'nav-link'  %>
+        </li>
+      </ul>
+    </div>
+  </div><!--end of container-fluid-->
+</nav><!--end of Navbar-->
+<div class = "navy"></div>
+<button type="button" class="btn btn-secondary btn-sm"><%= link_to "Add an Game", games_new_path, { :class => "button waves-effect waves-light btn" } %></button>
+
 
 <table class="table striped bordered">
   <tr> 
@@ -17,7 +108,10 @@
   <% @games.each do |game| %>
     <tr>
     <td><%= link_to game.name , game_path(game) %></td>
-    <td><%= image_tag game.img.url, class: "game-show" %></td>
+    <td><% if game.img_url %>
+      <%= image_tag game.img_url , size: "250x300", alt: "Game Image", class:"thumbnail"%>
+    <% end %></td>
+
     <td><%= game.user_rate %></td>
     <td><%= game.published_date %></td>
     <td><%= game.price %></td>
@@ -26,15 +120,13 @@
                     <i class="large material-icons">Edit</i>
               </a>
         </td>
-    <!--  <td><a class="btn-floating btn-large red" data-confirm="Are you sure you want to delete <%= game.name %>?" data-method="delete" href="/games/<%= game.id %>" rel="nofollow"><i class="large material-icons">Delete Game</i>
-         </a>
+    <td>
+    <a  data-confirm="Are you sure you want to delete <%= game.name%>?" data-method="delete" href="/games/<%= game.id %>" rel="nofollow">delete</a>
+
+
       </td>
-        
-                   -->
-<td> 
-         <%= button_to "Delete", "games/#{game.id}", method: :delete,
-            data: { confirm: "Are you sure?" } %>
-            </td>
-    </tr>
+      
+    
 <% end %>
 </table>
+<body/>

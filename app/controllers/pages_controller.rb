@@ -1,7 +1,7 @@
 class PagesController < ActionController::Base
-    def index
+   
+     def mygame
+        @games =Game.where(user_id: current_user.id)
+
     end
-    #  def mygame
-    #     @games =current_user#put the games
-    # end
 end
