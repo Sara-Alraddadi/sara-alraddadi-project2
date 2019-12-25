@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Login Page</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+    <%= stylesheet_link_tag "login" %>
+<!--===============================================================================================-->
+    <link href="https://fonts.googleapis.com/css?family=Bitter&display=swap" rel="stylesheet">
+
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<div class="login100-pic js-tilt" data-tilt>
+                <img src="https://i.ibb.co/C7MZ60y/hiclipart-com.png" alt="hiclipart-com" border="0">
+                </div>
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+
+				<form class="login100-form validate-form">
+					<span class="login100-form-title">
+						Member Sign Up
+          </span>
+        
+
+					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+						<div class="input100">
+							<%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder:"Email", class:"input100" %>
+						</div>
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</span>
+            </div>
+       
+
+          <div class="wrap-input100 validate-input" data-validate = "Password is required">
+          <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %> characters minimum)</em>
+          <% end %><br />
+            <div class="input100">
+           
+							<%= f.password_field :password, autocomplete: "new-password", class:"input100", placeholder:"new-password" %>
+						</div>
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
+          </div>
+        
+
+          <div class="wrap-input100 validate-input" data-validate = "Password is required">
+            <div class="input100">
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", class:"input100", placeholder:"new-password" %>
+            </div>
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+              <i class="fa fa-lock" aria-hidden="true"></i>
+            </span>
+          </div>
+
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn actions">
+            Sign Up
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+<% end %>
+
+<%= render "devise/shared/links" %>

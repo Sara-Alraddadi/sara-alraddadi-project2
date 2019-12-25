@@ -1,0 +1,40 @@
+<h1>All the Games</h1>
+<%= link_to "Add an Game", 'games/new', { :class => "button waves-effect waves-light btn" } %>
+
+<table class="table striped bordered">
+  <tr> 
+    <th>Game</th>
+    <th>Image</th>
+    <th>User Rate</th>
+    <th>Published Date</th>
+    <th>Price</th>
+    <th>Description</th>
+    <th>Edit</th>
+    <th>Delete</th>
+  </tr>
+
+
+  <% @games.each do |game| %>
+    <tr>
+    <td><%= link_to game.name , game_path(game) %></td>
+    <td><%= image_tag game.img.url, class: "game-show" %></td>
+    <td><%= game.user_rate %></td>
+    <td><%= game.published_date %></td>
+    <td><%= game.price %></td>
+    <td><%= game.description %></td>
+      <td><a class="btn-floating btn-large red" href="<%= game_edit_path(game) %>" >
+                    <i class="large material-icons">Edit</i>
+              </a>
+        </td>
+    <!--  <td><a class="btn-floating btn-large red" data-confirm="Are you sure you want to delete <%= game.name %>?" data-method="delete" href="/games/<%= game.id %>" rel="nofollow"><i class="large material-icons">Delete Game</i>
+         </a>
+      </td>
+        
+                   -->
+<td> 
+         <%= button_to "Delete", "games/#{game.id}", method: :delete,
+            data: { confirm: "Are you sure?" } %>
+            </td>
+    </tr>
+<% end %>
+</table>
